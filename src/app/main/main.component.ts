@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {MENU_ITEMS} from "../pages/pages-menu";
+import {NAV_ITEMS} from "./nav-items";
 
 @Component({
   selector : 'app-main',
@@ -13,5 +13,5 @@ import {MENU_ITEMS} from "../pages/pages-menu";
 })
 export class MainComponent {
 
-  menu = MENU_ITEMS;
+  menu = NAV_ITEMS;
 }
