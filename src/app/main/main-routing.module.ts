@@ -12,6 +12,11 @@ const routes: Routes = [
         path: 'test',
         component: HelloMainComponent,
       },
+      {
+        path: 'users',
+        loadChildren: () => import('./users/users.module')
+          .then( module => module.UsersModule)
+      },
       { path: '', redirectTo: 'test', pathMatch: 'full'}
     ]
   }

@@ -2,6 +2,12 @@ import {NbMenuItem} from "@nebular/theme";
 
 export const NAV_ITEMS: NbMenuItem[] = [
   {
+    title: 'Dashboard',
+    icon: 'shopping-cart-outline',
+    link: '/pages/dashboard',
+    home: true,
+  },
+  {
     title: 'USUARIOS',
     group: true
   },
@@ -11,11 +17,11 @@ export const NAV_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Listar Usuarios',
-        link: '/pages/layout/stepper',
+        link: '/home/users',
       },
       {
         title: 'Nuevo Usuario',
-        link: '/pages/layout/stepper',
+        link: '/home/users/new',
       },
     ]
   },
