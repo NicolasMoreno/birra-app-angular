@@ -8,16 +8,16 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      {
-        path: 'test',
-        component: HelloMainComponent,
-      },
+      // {
+      //   path: 'test',
+      //   component: HelloMainComponent,
+      // },
       {
         path: 'users',
         loadChildren: () => import('./users/users.module')
           .then( module => module.UsersModule)
       },
-      { path: '', redirectTo: 'test', pathMatch: 'full'}
+      { path: '', redirectTo: 'users', pathMatch: 'full'}
     ]
   }
 ];

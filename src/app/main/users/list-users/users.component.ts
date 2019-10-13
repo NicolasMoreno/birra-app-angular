@@ -66,11 +66,11 @@ export class UsersComponent implements OnInit {
     this.source.load(this.service.getData());
   }
 
-  onEditConfirm(event) {
+  onEditAction(event) {
     console.log(event);
   }
 
-  onDeleteConfirm(event) {
+  onDeleteAction(event) {
     console.log(event);
   }
 

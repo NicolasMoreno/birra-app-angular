@@ -57,7 +57,6 @@ const routes: Routes = [
     ],
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '**', redirectTo: 'home' },
 ];
 
 const config: ExtraOptions = {
