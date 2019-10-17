@@ -1,12 +1,14 @@
 import {Component, OnInit} from "@angular/core";
 import {LocalDataSource} from "ng2-smart-table";
 import {SmartTableData} from "../../../@core/data/smart-table";
+import {Router} from "@angular/router";
+import {EmployeeModel} from "../model/employee.model";
 
 @Component({
-  selector: 'app-users-component',
-  templateUrl: './users.component.html'
+  selector: 'app-employees-component',
+  templateUrl: './employees.component.html'
 })
-export class UsersComponent implements OnInit {
+export class EmployeesComponent implements OnInit {
 
   settings = {
     mode: 'external',
@@ -25,13 +27,8 @@ export class UsersComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-        filter: true,
-      },
-      firstName: {
-        title: 'First Name',
+      name: {
+        title: 'Name',
         type: 'string',
         filter: true,
       },
@@ -45,33 +42,30 @@ export class UsersComponent implements OnInit {
         type: 'string',
         filter: true,
       },
-      email: {
-        title: 'E-mail',
+      profile: {
+        title: 'Profile',
         type: 'string',
         filter: true,
-      },
-      age: {
-        title: 'Age',
-        type: 'number',
-        filter: true,
-      },
+      }
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData) {}
+  constructor(private service: SmartTableData, private readonly router: Router) {}
 
   ngOnInit(): void {
     this.source.load(this.service.getData());
+    // this.source.load(this.service.getData().map( data => EmployeeModel.from(data).toEmployeeTable()));
   }
 
-  onEditAction(event) {
+  onEditAction(event: {data: {id: number}}) {
     console.log(event);
+    this.router.navigate(['home', 'employees', event.data.id]);
   }
 
   onDeleteAction(event) {
-    console.log(event);
+    this.source.remove(event.data);
   }
 
 }

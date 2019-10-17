@@ -8,20 +8,20 @@ export const NAV_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'USUARIOS',
+    title: 'Empleados',
     group: true
   },
   {
-    title: 'Usuarios',
+    title: 'Empleados',
     icon: 'person-outline',
     children: [
       {
-        title: 'Listar Usuarios',
-        link: '/home/users',
+        title: 'Listar Empleados',
+        link: '/home/employees',
       },
       {
-        title: 'Nuevo Usuario',
-        link: '/home/users/new',
+        title: 'Nuevo Empleado',
+        link: '/home/employees/new',
       },
     ]
   },

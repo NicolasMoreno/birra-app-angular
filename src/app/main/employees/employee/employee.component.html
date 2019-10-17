@@ -1,0 +1,46 @@
+<div class="col-12">
+  <div class="col-md-10 offset-1">
+    <nb-card>
+      <nb-card-header>
+        <div class="col-12">
+        <button class="" nbButton ghost [size]="'small'" [routerLink]="['/home/employees']">
+          <nb-icon class="action-icon" icon="arrow-back-outline"></nb-icon>
+        </button>
+        <span>{{selectedId === 'new' ? 'Nuevo Empleado' : 'Empleado: ' + selectedId}}</span>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="userForm">
+          <div class="form-group">
+            <label for="name" class="label">Nombre</label>
+            <input type="text" [formControlName]="'name'" nbInput fullWidth id="name" placeholder="Nombre">
+          </div>
+          <div class="form-group">
+            <label for="lastName" class="label">Apellido</label>
+            <input type="text" [formControlName]="'lastName'" nbInput fullWidth id="lastName" placeholder="Apellido">
+          </div>
+          <div class="form-group">
+            <label for="username" class="label">Nombre Usuario</label>
+            <input type="text" [formControlName]="'username'" nbInput fullWidth id="username" placeholder="Usuario">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="label">Email address</label>
+            <input type="email" [formControlName]="'email'" nbInput fullWidth id="exampleInputEmail1" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="label">Password</label>
+            <input type="password" [formControlName]="'password'" nbInput fullWidth id="exampleInputPassword1" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="profile" class="label col-3">Perfil</label>
+            <nb-select selected="1" id="profile">
+              <nb-option value="1">Option 1</nb-option>
+              <nb-option value="2">Option 2</nb-option>
+            </nb-select>
+          </div>
+          <button type="submit" [disabled]="userForm.invalid" nbButton status="danger">Submit</button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,16 +1,16 @@
 import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
-import {UsersComponent} from "./list-users/users.component";
-import {UserComponent} from "./user/user.component";
+import {EmployeesComponent} from "./list-employees/employees.component";
+import {EmployeeComponent} from "./employee/employee.component";
 
 const routes: Routes = [
   {
     path: ':id',
-    component: UserComponent
+    component: EmployeeComponent
   },
   {
     path: '',
-    component: UsersComponent
+    component: EmployeesComponent
   },
 ];
 
@@ -19,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UsersRoutingModule {}
+export class EmployeesRoutingModule {}

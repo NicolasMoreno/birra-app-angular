@@ -13,11 +13,11 @@ const routes: Routes = [
       //   component: HelloMainComponent,
       // },
       {
-        path: 'users',
-        loadChildren: () => import('./users/users.module')
-          .then( module => module.UsersModule)
+        path: 'employees',
+        loadChildren: () => import('./employees/employees.module')
+          .then( module => module.EmployeesModule)
       },
-      { path: '', redirectTo: 'users', pathMatch: 'full'}
+      { path: '', redirectTo: 'employees', pathMatch: 'full'}
     ]
   }
 ];
