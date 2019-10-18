@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class EmployeeComponent implements OnInit {
 
   selectedId: string;
+  isNewEmployee: boolean;
 
   userForm: FormGroup;
 
@@ -18,12 +19,15 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe( (params) => {
       this.selectedId = params.id;
+      // todo get employee data
+      this.isNewEmployee = this.selectedId === 'new';
     });
     this.generateForm();
   }
 
   private generateForm() {
     this.userForm = this.formBuilder.group({
+      // todo hacer que inicien con un valor inicial
       name: this.formBuilder.control('', [Validators.required]),
       lastName: this.formBuilder.control('', [Validators.required]),
       username: this.formBuilder.control('', [Validators.required]),

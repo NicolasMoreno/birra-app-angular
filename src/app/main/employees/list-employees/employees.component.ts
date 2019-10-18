@@ -27,7 +27,7 @@ export class EmployeesComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      name: {
+      firstName: {
         title: 'Name',
         type: 'string',
         filter: true,
@@ -60,7 +60,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   onEditAction(event: {data: {id: number}}) {
-    console.log(event);
     this.router.navigate(['home', 'employees', event.data.id]);
   }
 

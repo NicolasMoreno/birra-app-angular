@@ -1,0 +1,16 @@
+<div>
+  <nb-card>
+    <nb-card-header>
+      <div class="col-12">
+        <span>Perfiles</span>
+        <button class="offset-sm-10" nbButton outline [size]="'small'" [routerLink]="['new']">
+          <nb-icon class="action-icon" icon="plus-outline"></nb-icon>
+        </button>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (edit)="onEditAction($event)" (delete)="onDeleteAction($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+</div>

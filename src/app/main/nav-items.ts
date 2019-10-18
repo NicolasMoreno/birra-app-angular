@@ -26,20 +26,20 @@ export const NAV_ITEMS: NbMenuItem[] = [
     ]
   },
   {
-    title: 'PERFILES',
+    title: 'Perfiles',
     group: true
   },
   {
-    title: 'Perfil',
+    title: 'Perfiles',
     icon: 'layout-outline',
     children: [
       {
         title: 'Listar Perfiles',
-        link: '/pages/layout/stepper',
+        link: '/home/profiles',
       },
       {
         title: 'Crear Perfil',
-        link: '/pages/layout/stepper',
+        link: '/home/profiles/new',
       },
     ]
   },

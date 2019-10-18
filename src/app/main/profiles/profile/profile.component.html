@@ -1,0 +1,25 @@
+<div class="col-12">
+  <div class="col-md-10 offset-1">
+    <nb-card>
+      <nb-card-header>
+        <div class="col-12">
+          <button class="" nbButton ghost [size]="'small'" [routerLink]="['/home/profiles']">
+            <nb-icon class="action-icon" icon="arrow-back-outline"></nb-icon>
+          </button>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="profileForm">
+          <div class="form-group">
+            <label for="name" class="label">Nombre</label>
+            <input type="text" [formControlName]="'name'" nbInput fullWidth id="name" placeholder="Nombre">
+          </div>
+        </form>
+        <div class="sector-group">
+            <ng2-smart-table [settings]="settings" (userRowSelect)="testingSelect($event)" [source]="source">
+            </ng2-smart-table>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
