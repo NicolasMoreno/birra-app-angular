@@ -44,7 +44,7 @@ export const NAV_ITEMS: NbMenuItem[] = [
     ]
   },
   {
-    title: 'INSUMOS',
+    title: 'Insumos',
     group: true
   },
   {
@@ -53,11 +53,11 @@ export const NAV_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Ver Insumos',
-        link: '/pages/layout/stepper',
+        link: '/home/supplies',
       },
       {
         title: 'Restockear Insumo',
-        link: '/pages/layout/stepper',
+        link: '/pages/supplies',
       },
     ]
   },

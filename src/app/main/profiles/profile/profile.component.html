@@ -19,6 +19,7 @@
             <ng2-smart-table [settings]="settings" (userRowSelect)="testingSelect($event)" [source]="source">
             </ng2-smart-table>
         </div>
+        <button type="button" (click)="onSubmitButton()" [disabled]="profileForm.invalid" nbButton status="info">Aceptar</button>
       </nb-card-body>
     </nb-card>
   </div>

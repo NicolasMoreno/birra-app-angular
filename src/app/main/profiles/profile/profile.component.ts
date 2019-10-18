@@ -69,4 +69,8 @@ export class ProfileComponent implements OnInit {
     // event.selected está los objetos seleccionados. todo
     console.log(event);
   }
+
+  onSubmitButton() {
+    console.log(this.profileForm.getRawValue());
+  }
 }

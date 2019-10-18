@@ -1,0 +1,33 @@
+<div class="col-12">
+  <div class="col-md-10 offset-1">
+    <nb-card>
+      <nb-card-header>
+        <button class="" nbButton ghost [size]="'small'" [routerLink]="['/home/supplies']">
+          <nb-icon class="action-icon" icon="arrow-back-outline"></nb-icon>
+        </button>
+        <span>Insumo seleccionado: </span>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="supplyForm">
+          <div class="form-group">
+            <label for="supplyType" class="label">Insumo</label>
+            <input type="text" [formControlName]="'supplyType'" nbInput fullWidth id="supplyType" placeholder="Insumo">
+          </div>
+          <div class="form-group">
+            <label for="actualAmount" class="label">Cantidad actual</label>
+            <input type="text" [formControlName]="'actualAmount'" nbInput fullWidth id="actualAmount" placeholder="Cantidad Actual">
+          </div>
+          <div class="form-group">
+            <label for="unit" class="label">Unidad</label>
+            <input type="text" [formControlName]="'unit'" nbInput fullWidth id="unit" placeholder="Unidad">
+          </div>
+          <div class="form-group">
+            <label for="raiseAmount" class="label">Cantidad a Stockear</label>
+            <input type="number" [min]="0" [formControlName]="'raiseAmount'" nbInput fullWidth id="raiseAmount" placeholder="A Stockear">
+          </div>
+          <button type="button" (click)="onSubmitButton()" [disabled]="supplyForm.invalid" nbButton status="info">Stockear</button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
