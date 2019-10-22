@@ -1,7 +1,7 @@
 import {User} from "./user";
 
 export class UserModel implements User {
-  id: number;
+  id: string;
   lastName: string;
   mail: string;
   name: string;
@@ -13,7 +13,7 @@ export class UserModel implements User {
   }
 
 
-  constructor(id: number, lastName: string, mail: string, name: string, password: string, username: string) {
+  constructor(id: string, lastName: string, mail: string, name: string, password: string, username: string) {
     this.id = id;
     this.lastName = lastName;
     this.mail = mail;
