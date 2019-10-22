@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Sector} from "../../employees/model/sector";
 import {LocalDataSource} from "ng2-smart-table";
+import {ProfileService} from "../../../shared/profile.service";
+import {Profile} from "../../employees/model/profile";
+import {SectorService} from "../../../shared/sector.service";
 
 @Component({
   selector: 'app-profile-component',
@@ -10,8 +13,9 @@ import {LocalDataSource} from "ng2-smart-table";
 })
 export class ProfileComponent implements OnInit {
 
-  selectedId: string;
+  selectedId: number;
   isNewProfile: boolean;
+  profile: Profile;
 
   settings = {
     selectMode: 'multi',
@@ -40,29 +44,44 @@ export class ProfileComponent implements OnInit {
   sectors: Sector[];
 
   constructor(private readonly activatedRoute: ActivatedRoute,
-              private readonly formBuilder: FormBuilder) {}
+              private readonly formBuilder: FormBuilder,
+              private profileService: ProfileService,
+              private sectorService: SectorService
+  ) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
+      this.getAllSectors();
       this.selectedId = params.id;
-      // todo get profile data
-      this.generateForm();
-      this.isNewProfile = this.selectedId === 'new';
+      this.profileService.requestProfile(this.selectedId)
+        .subscribe(p => {
+          try {
+            this.profile = p;
+
+            this.isNewProfile = this.selectedId.toString() === 'new';
+            this.generateForm();
+          } catch (error) {
+            console.log(error);
+          }
+        });
+
+
     });
     this.getAllSectors();
   }
 
   private generateForm() {
     this.profileForm = this.formBuilder.group({
-      name: this.formBuilder.control('', [Validators.required]),
-      sectors: this.formBuilder.control('', [Validators.required])
+      name: this.formBuilder.control(this.profile.name, [Validators.required]),
+      sectors: this.formBuilder.control(this.profile.sectors, [Validators.required])
     });
   }
 
   private getAllSectors() {
-    // this.sectorService.getAll().subscribe( (sectors: Sector[]) => {
-    //   this.sectors = sectors;
-    // });
+    this.sectorService.requestSectors().subscribe(s => {
+      this.sectors = s;
+    });
   }
 
   testingSelect(event) {
