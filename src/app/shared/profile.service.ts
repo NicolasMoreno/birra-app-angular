@@ -27,4 +27,8 @@ export class ProfileService {
   updateProfile(profile: Profile): Observable<Profile> {
     return this.http.put<Profile>(`${this.url}employee-profile/`, profile);
   }
+
+  deleteProfile(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.url}employee-profile/${id}`);
+  }
 }

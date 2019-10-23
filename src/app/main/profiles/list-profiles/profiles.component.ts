@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {LocalDataSource} from "ng2-smart-table";
 import {ProfileService} from "../../../shared/profile.service";
+import {NbToastrService} from "@nebular/theme";
 
 @Component({
   selector: 'app-profiles-component',
@@ -36,6 +37,7 @@ export class ProfilesComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
   constructor(private readonly router: Router,
+              private toastrService: NbToastrService,
               private profileService: ProfileService) {
 
   }
@@ -51,7 +53,15 @@ export class ProfilesComponent implements OnInit {
   }
 
   onDeleteAction(event) {
-    this.source.remove(event.data);
+    this.profileService.deleteProfile(event.data.id).subscribe( (deleted) => {
+      if (deleted) {
+        this.source.remove(event.data);
+        this.toastrService.success("Exito eliminando perfil", "Eliminado", {duration: 3000});
+      } else {
+        this.toastrService.danger("Error eliminando perfil", "No Eliminado", {duration: 3000});
+      }
+    });
+
   }
 
 }

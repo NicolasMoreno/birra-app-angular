@@ -1,6 +1,6 @@
 <div class="col-12">
   <div class="col-md-10 offset-1">
-    <nb-card>
+    <nb-card *ngIf="profileForm">
       <nb-card-header>
         <div class="col-12">
           <button class="" nbButton ghost [size]="'small'" [routerLink]="['/home/profiles']">
@@ -14,9 +14,12 @@
             <label for="name" class="label">Nombre</label>
             <input type="text" [formControlName]="'name'" nbInput fullWidth id="name" placeholder="Nombre">
           </div>
+          <div *ngIf="!isNewProfile">
+            Sectores actuales: {{getPreviousSectors()}}
+          </div>
         </form>
         <div class="sector-group">
-            <ng2-smart-table [settings]="settings" (userRowSelect)="testingSelect($event)" [source]="source">
+            <ng2-smart-table #table [settings]="settings" (userRowSelect)="testingSelect($event)" [source]="source">
             </ng2-smart-table>
         </div>
         <button type="button" (click)="onSubmitButton()" [disabled]="profileForm.invalid" nbButton status="info">Aceptar</button>
