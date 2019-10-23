@@ -2,7 +2,9 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Stock} from "../main/supplies/model/stock";
 import {environment} from "../../environments/environment";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class StockService {
 
   private readonly url: string = environment.url;
@@ -24,5 +26,9 @@ export class StockService {
 
   updateStock(stock: Stock): Observable<Stock> {
     return this.http.put<Stock>(`${this.url}stock/`, stock);
+  }
+
+  addStock(data: {materialId: number, restockingAmount: number}): Observable<Stock> {
+    return this.http.post<Stock>(`${this.url}stock/restock`, data);
   }
 }

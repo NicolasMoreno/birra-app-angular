@@ -1,6 +1,5 @@
 export interface Supply {
   id: number;
-  supplyType: string; // ?
-  amount: number;
-  unit: string;
+  name: string;
+  unit: {unitName: string, quantityType: string};
 }

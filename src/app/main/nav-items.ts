@@ -55,13 +55,14 @@ export const NAV_ITEMS: NbMenuItem[] = [
         title: 'Ver Insumos',
         link: '/home/supplies',
       },
-      {
-        title: 'Restockear Insumo',
-        link: '/pages/supplies',
-      },
     ]
   },
 ];
+
+// {
+//   title: 'Restockear Insumo',
+//     link: '/pages/supplies',
+// },
 
 /*
 *   {

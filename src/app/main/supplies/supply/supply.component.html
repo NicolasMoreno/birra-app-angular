@@ -1,6 +1,6 @@
 <div class="col-12">
   <div class="col-md-10 offset-1">
-    <nb-card>
+    <nb-card *ngIf="supplyForm">
       <nb-card-header>
         <button class="" nbButton ghost [size]="'small'" [routerLink]="['/home/supplies']">
           <nb-icon class="action-icon" icon="arrow-back-outline"></nb-icon>
