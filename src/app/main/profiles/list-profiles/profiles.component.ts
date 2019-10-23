@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {LocalDataSource} from "ng2-smart-table";
+import {ProfileService} from "../../../shared/profile.service";
 
 @Component({
   selector: 'app-profiles-component',
@@ -34,14 +35,18 @@ export class ProfilesComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private readonly router: Router) {
+  constructor(private readonly router: Router,
+              private profileService: ProfileService) {
+
   }
 
   ngOnInit(): void {
-    // this.source.load(this.profileService.getProfiles())
+    this.profileService.requestProfiles().subscribe(ps => {
+      this.source.load(ps);
+    });
   }
 
-  onEditAction(event: {data: {id: number}}) {
+  onEditAction(event: { data: { id: number } }) {
     this.router.navigate(['home', 'profiles', event.data.id]);
   }
 

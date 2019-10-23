@@ -18,8 +18,6 @@ export class SupplyComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe( (params) => {
       this.selectedId = params.id;
-      // todo get supply data
-
     });
     this.generateForm();
   }

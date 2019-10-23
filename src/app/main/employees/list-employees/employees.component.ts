@@ -3,6 +3,9 @@ import {LocalDataSource} from "ng2-smart-table";
 import {SmartTableData} from "../../../@core/data/smart-table";
 import {Router} from "@angular/router";
 import {EmployeeModel} from "../model/employee.model";
+import {EmployeeService} from "../../../shared/employee.service";
+import {Employee} from "../model/employee";
+import {EmployeeTableModel} from "../model/employeeTable.model";
 
 @Component({
   selector: 'app-employees-component',
@@ -52,19 +55,32 @@ export class EmployeesComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData, private readonly router: Router) {}
+  employees: Employee[] = [];
 
-  ngOnInit(): void {
-    this.source.load(this.service.getData());
-    // this.source.load(this.service.getData().map( data => EmployeeModel.from(data).toEmployeeTable()));
+  constructor(private service: SmartTableData,
+              private readonly router: Router,
+              private employeeService: EmployeeService) {
   }
 
-  onEditAction(event: {data: {id: number}}) {
+  ngOnInit(): void {
+    this.employeeService.requestEmployees().subscribe(es => {
+      try {
+        this.employees = es;
+        this.source.load(this.employees.map(e => EmployeeTableModel.from(e)));
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }
+
+
+  onEditAction(event: { data: { id: number } }) {
     this.router.navigate(['home', 'employees', event.data.id]);
   }
 
   onDeleteAction(event) {
-    this.source.remove(event.data);
+    if (this.employeeService.deleteEmployee(event.data.id))
+      this.source.remove(event.data);
   }
 
 }

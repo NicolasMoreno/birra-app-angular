@@ -3,10 +3,10 @@
     <nb-card>
       <nb-card-header>
         <div class="col-12">
-        <button class="" nbButton ghost [size]="'small'" [routerLink]="['/home/employees']">
-          <nb-icon class="action-icon" icon="arrow-back-outline"></nb-icon>
-        </button>
-        <span>{{selectedId === 'new' ? 'Nuevo Empleado' : 'Empleado: ' + selectedId}}</span>
+          <button class="" nbButton ghost [size]="'small'" [routerLink]="['/home/employees']">
+            <nb-icon class="action-icon" icon="arrow-back-outline"></nb-icon>
+          </button>
+          <span>{{selectedId === 'new' ? 'Nuevo Empleado' : 'Empleado: ' + selectedId}}</span>
         </div>
       </nb-card-header>
       <nb-card-body>
@@ -25,20 +25,22 @@
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1" class="label">Email address</label>
-            <input type="email" [formControlName]="'email'" nbInput fullWidth id="exampleInputEmail1" placeholder="Email">
+            <input type="email" [formControlName]="'email'" nbInput fullWidth id="exampleInputEmail1"
+                   placeholder="Email">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1" class="label">Password</label>
-            <input type="password" [formControlName]="'password'" nbInput fullWidth id="exampleInputPassword1" placeholder="Password">
+            <input type="password" [formControlName]="'password'" nbInput fullWidth id="exampleInputPassword1"
+                   placeholder="Password">
           </div>
           <div class="form-group">
             <label for="profile" class="label">Perfil</label>
-            <nb-select selected="1" id="profile" fullWidth >
-              <nb-option value="1">Option 1</nb-option>
-              <nb-option value="2">Option 2</nb-option>
+            <nb-select [selected]="undefined" id="profile" fullWidth *ngFor="let profile of profiles">
+              <nb-option [value]="profile.id">{{profile.name}}</nb-option>
             </nb-select>
           </div>
-          <button type="submit" [disabled]="userForm.invalid" nbButton status="info">{{isNewEmployee ? 'Crear' : 'Editar'}}</button>
+          <button type="submit" [disabled]="userForm.invalid" nbButton
+                  status="info">{{isNewEmployee ? 'Crear' : 'Editar'}}</button>
         </form>
       </nb-card-body>
     </nb-card>
