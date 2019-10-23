@@ -12,18 +12,18 @@ export class EmployeeModel implements Employee {
     return new EmployeeModel(json.id, json.profile, json.user);
   }
 
-  toEmployeeTable(): {name: string, lastName: string, username: string, profile: string} {
-    return {
-      name: this.user.name,
-      lastName: this.user.lastName,
-      username: this.user.username,
-      profile: this.profile.name
-    };
+  static empty(): EmployeeModel {
+    return new EmployeeModel(undefined, undefined, undefined);
   }
 
   constructor(id: number, profile: Profile, user: User) {
     this.id = id;
     this.profile = profile;
     this.user = user;
+  }
+
+  setUser(userId: string, userData: User) {
+    this.user = userData;
+    this.user.id = userId;
   }
 }

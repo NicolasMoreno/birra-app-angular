@@ -6,6 +6,7 @@ import {EmployeeModel} from "../model/employee.model";
 import {EmployeeService} from "../../../shared/employee.service";
 import {Employee} from "../model/employee";
 import {EmployeeTableModel} from "../model/employeeTable.model";
+import {NbToastrService} from "@nebular/theme";
 
 @Component({
   selector: 'app-employees-component',
@@ -59,7 +60,9 @@ export class EmployeesComponent implements OnInit {
 
   constructor(private service: SmartTableData,
               private readonly router: Router,
-              private employeeService: EmployeeService) {
+              private employeeService: EmployeeService,
+              private toastrService: NbToastrService
+  ) {
   }
 
   ngOnInit(): void {
@@ -79,8 +82,15 @@ export class EmployeesComponent implements OnInit {
   }
 
   onDeleteAction(event) {
-    if (this.employeeService.deleteEmployee(event.data.id))
-      this.source.remove(event.data);
+    this.employeeService.deleteEmployee(event.data.id).subscribe( (deleted) => {
+      if (deleted) {
+        this.source.remove(event.data);
+        this.toastrService.success("Eliminado correctamente", "Eliminado", {duration: 2000});
+      } else {
+        this.toastrService.danger("Error eliminando", "Error", {duration: 2000});
+
+      }
+    });
   }
 
 }
