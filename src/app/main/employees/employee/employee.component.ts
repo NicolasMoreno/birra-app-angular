@@ -2,8 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EmployeeService} from "../../../shared/employee.service";
-import {Employee} from "../model/employee";
-import {init} from "protractor/built/launcher";
 import {Profile} from "../model/profile";
 import {ProfileService} from "../../../shared/profile.service";
 import {EmployeeModel} from "../model/employee.model";
@@ -28,13 +26,11 @@ export class EmployeeComponent implements OnInit {
               private employeeService: EmployeeService,
               private profileService: ProfileService,
               private toastrService: NbToastrService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.profileService.requestProfiles().subscribe(ps => {
-        console.log(ps);
         this.profiles = ps;
       });
       this.selectedId = params.id;
@@ -60,7 +56,8 @@ export class EmployeeComponent implements OnInit {
       name: this.formBuilder.control(!this.isNewEmployee ? this.employee.user.name : '', [Validators.required]),
       lastName: this.formBuilder.control(!this.isNewEmployee ? this.employee.user.lastName : '', [Validators.required]),
       username: this.formBuilder.control(!this.isNewEmployee ? this.employee.user.username : '', [Validators.required]),
-      email: this.formBuilder.control(!this.isNewEmployee ? this.employee.user.mail : '', [Validators.required]),
+      email: this.formBuilder.control(!this.isNewEmployee ? this.employee.user.mail : '',
+        [Validators.required, Validators.email]),
       password: this.formBuilder.control('', []),
       profile: this.formBuilder.control(!this.isNewEmployee ? this.employee.profile.id : '', [])
     });

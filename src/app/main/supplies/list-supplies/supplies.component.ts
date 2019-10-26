@@ -20,7 +20,7 @@ export class SuppliesComponent implements OnInit {
     },
     actions: {
       add: false,
-      delete: 0,
+      delete: false,
       position: 'right'
     },
     columns: {

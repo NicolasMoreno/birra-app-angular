@@ -13,6 +13,11 @@ const routes: Routes = [
       //   component: HelloMainComponent,
       // },
       {
+        path: 'dashboard',
+        loadChildren: () => import('./dashboard/dashboard.module')
+          .then( m => m.DashboardModule)
+      },
+      {
         path: 'employees',
         loadChildren: () => import('./employees/employees.module')
           .then( module => module.EmployeesModule)

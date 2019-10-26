@@ -4,7 +4,7 @@ export const NAV_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
     icon: 'shopping-cart-outline',
-    link: '/pages/dashboard',
+    link: '/home/dashboard',
     home: true,
   },
   {
