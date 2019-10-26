@@ -11,7 +11,7 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  getAllOrders(): Observable<Order> {
-    return this.http.get<Order>(`${this.url}orders/all`);
+  getAllOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.url}orders/all`);
   }
 }
