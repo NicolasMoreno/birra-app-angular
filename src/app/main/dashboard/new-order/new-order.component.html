@@ -1,0 +1,35 @@
+<div>
+  <nb-card>
+    <nb-card-header>
+      <div class="col-12">
+        <button class="" nbButton ghost [size]="'small'" [routerLink]="['/home/dashboard']">
+          <nb-icon class="action-icon" icon="arrow-back-outline"></nb-icon>
+        </button>
+        <span>Nueva Orden</span>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="newOrderForm">
+        <div class="form-inline">
+          <div class="form-group col-6">
+            <label for="product" class="label">Producto</label>
+            <nb-select fullWidth [formControlName]="'productId'" id="product" >
+              <nb-option *ngFor="let product of productList" [value]="product.id">{{product.name}}</nb-option>
+            </nb-select>
+          </div>
+          <div class="form-group col-6">
+            <label for="amount" class="label">Cantidad</label>
+            <input type="number" [min]="1" fullWidth [formControlName]="'orderAmount'" nbInput id="amount" placeholder="Cantidad">
+          </div>
+        </div>
+        <div class="form-group col-12 mt-4">
+          <label for="description" class="label">Descripción</label>
+          <input type="text" [formControlName]="'description'" nbInput fullWidth id="description" placeholder="Descripción de Orden">
+        </div>
+        <div class="col-12 text-center">
+          <button type="button" (click)="onSubmitButton()" [disabled]="newOrderForm.invalid" nbButton status="info">Inciar Orden</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>

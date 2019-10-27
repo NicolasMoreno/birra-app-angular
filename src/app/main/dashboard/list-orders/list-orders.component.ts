@@ -7,6 +7,9 @@ import {Order} from "../model/order";
 import {OrderTableModel} from "../model/order-table.model";
 import {OrderState} from "../model/order-state.enum";
 import {OrderProcess} from "../model/order-process.enum";
+import {StatusRendererComponent} from "../table-render/status-renderer.component";
+import {DateRendererComponent} from "../table-render/date-renderer.component";
+import {ProcessRendererComponent} from "../table-render/process-renderer.component";
 
 @Component({
   selector: 'app-orders-component',
@@ -14,24 +17,194 @@ import {OrderProcess} from "../model/order-process.enum";
 })
 export class ListOrdersComponent implements OnInit {
 
+  /*data: OrderTableModel[] =
+    [
+      OrderTableModel.from({
+        id: 1,
+        product: {id: 10, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.EN_PROGRESO,
+        actualProcess: OrderProcess.HERVIDO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 3000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      }),
+      OrderTableModel.from({
+        id: 2,
+        product: {id: 11, name: 'Cerveza Rubia', description: 'cerveza test'},
+        state: OrderState.FINALIZADO,
+        actualProcess: OrderProcess.GASIFICADO,
+        subOrders: [],
+        startedDate: new Date(),
+        finishedDate: undefined,
+        orderAmount: 2000,
+        description: 'hola'
+      })
+    ];*/
+
+  data: OrderTableModel[] = [];
+  source: LocalDataSource = new LocalDataSource();
+
   settings = {
     mode: 'external',
     edit: {
-      editButtonContent: '<i class="nb-info"></i>',
+      editButtonContent: '<i class="nb-arrow-right"></i>',
     },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-    },
+    noDataMessage: 'No se encontraron elementos',
     actions: {
       add: false,
-      delete: 0,
+      delete: false,
       position: 'right',
     },
     columns: {
       id: {
         title: 'Id Orden',
         type: 'number',
-        filter: true
+        filter: true,
       },
       product: {
         title: 'Producto',
@@ -40,52 +213,84 @@ export class ListOrdersComponent implements OnInit {
       },
       status: {
         title: 'Estado',
-        type: 'string',
-        filter: true,
+        type: 'custom',
+        renderComponent: StatusRendererComponent,
+        filter: {
+          type: 'list',
+          config: {
+            selectText: 'Estado...',
+            list: [
+              { value: 'NO_COMENZADO', title: 'No Comenzado' },
+              { value: 'EN_PROGRESO', title: 'En Progreso' },
+              { value: 'ATRASADO', title: 'Atrasado' },
+              { value: 'FINALIZADO', title: 'Finalizado' },
+            ],
+          },
+        }
       },
       process: {
         title: 'Proceso Actual',
-        type: 'string',
-        filter: true,
+        type: 'custom',
+        renderComponent: ProcessRendererComponent,
+        filter: {
+          type: 'list',
+          config: {
+            selectText: 'Proceso...',
+            list: [
+              { value: 0, title: 'Molienda' },
+              { value: 1, title: 'Macerado' },
+              { value: 2, title: 'Recirculado y Lavado' },
+              { value: 3, title: 'Hervido' },
+              { value: 4, title: 'Enfriado' },
+              { value: 5, title: 'Fermentacion' },
+              { value: 6, title: 'Madurado' },
+              { value: 7, title: 'Embotellado' },
+              { value: 8, title: 'Gasificado' },
+            ],
+          },
+        }
       },
       startedDate: {
         title: 'Fecha Inicio',
-        type: 'string',
+        type: 'custom',
+        renderComponent: DateRendererComponent,
         filter: true,
       },
       finishedDate: {
         title: 'Fecha Fin',
-        type: 'string',
+        type: 'custom',
+        renderComponent: DateRendererComponent,
         filter: true,
       },
       orderAmount: {
         title: 'Cantidad Pedido',
         type: 'number',
-        filter: true,
+        filter: {
+          type: 'completer',
+          config: {
+            completer: {
+              data: this.data,
+              searchFields: 'orderAmount',
+              titleField: 'orderAmount',
+            },
+          },
+        },
       }
     },
   };
 
-  source: LocalDataSource = new LocalDataSource([OrderTableModel.from({
-    id: 1,
-    product: {id: 10, name: 'cerveza', description: 'cerveza test'},
-    state: OrderState.IN_PROGRESS,
-    actualProcess: OrderProcess.GASIFICADO,
-    subOrders: [],
-    startedDate: new Date(),
-    finishedDate: undefined,
-    orderAmount: 2000,
-    description: 'hola'
-  })]);
+  finishedLoading: boolean = false;
 
   constructor(private readonly orderService: OrderService,
               private readonly router: Router,
               private readonly toastrService: NbToastrService) {}
 
   ngOnInit(): void {
+    this.finishedLoading = false;
     this.orderService.getAllOrders().subscribe( (allOrders: Order[]) => {
-      console.log(allOrders);
-      // this.source.load(allOrders.map( order => OrderTableModel.from(order)));
+      // console.log(allOrders);
+      this.source.load(allOrders.map( order => OrderTableModel.from(order)));
+      this.finishedLoading = true;
     });
   }
 

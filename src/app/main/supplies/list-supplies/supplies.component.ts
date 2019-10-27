@@ -42,22 +42,12 @@ export class SuppliesComponent implements OnInit {
     }
   };
 
-  // source: LocalDataSource = new LocalDataSource(
-  //   [
-  //     {id: 1, supplyType: 'Agua', amount: 10, unit: 'Litros'},
-  //     {id: 2, supplyType: 'Granos', amount: 10, unit: 'Kilos'},
-  //     {id: 3, supplyType: 'Malta', amount: 5, unit: 'Kilos'},
-  //     {id: 4, supplyType: 'Lúpulo', amount: 20, unit: 'Kilos'},
-  //   ]
-  // );
-
   source: LocalDataSource = new LocalDataSource();
 
   constructor(private readonly router: Router, private readonly stockService: StockService) {}
 
   ngOnInit(): void {
     this.stockService.requestStocks().subscribe( (result) => {
-      console.log(result);
       this.source.load(result.map( stock => SupplyTableModel.from(stock)));
     });
   }
