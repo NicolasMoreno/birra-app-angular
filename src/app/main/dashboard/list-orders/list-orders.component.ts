@@ -5,8 +5,6 @@ import {LocalDataSource} from "ng2-smart-table";
 import {OrderService} from "../../../shared/order.service";
 import {Order} from "../model/order";
 import {OrderTableModel} from "../model/order-table.model";
-import {OrderState} from "../model/order-state.enum";
-import {OrderProcess} from "../model/order-process.enum";
 import {StatusRendererComponent} from "../table-render/status-renderer.component";
 import {DateRendererComponent} from "../table-render/date-renderer.component";
 import {ProcessRendererComponent} from "../table-render/process-renderer.component";

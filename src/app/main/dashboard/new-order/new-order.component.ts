@@ -3,6 +3,10 @@ import {Product} from "../../products/model/product";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProductService} from "../../../shared/product.service";
 import {OrderService} from "../../../shared/order.service";
+import {NbToastrService} from "@nebular/theme";
+import {Order} from "../model/order";
+import {Router} from "@angular/router";
+import {ProductAvailability} from "../../products/model/product-availability";
 
 @Component({
   selector: 'app-new-order-component',
@@ -11,16 +15,24 @@ import {OrderService} from "../../../shared/order.service";
 export class NewOrderComponent implements OnInit {
 
   productList: Product[] = [];
+  maxProdAvailability: ProductAvailability[] = [];
 
   newOrderForm: FormGroup;
 
   constructor(private readonly productService: ProductService,
               private readonly orderService: OrderService,
-              private readonly fb: FormBuilder) {}
+              private readonly fb: FormBuilder,
+              private readonly toastrService: NbToastrService,
+              private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.productService.getAll().subscribe( (products: Product[]) => this.productList = products);
+    this.productService.getAll().subscribe( (products: Product[]) => {
+      this.productList = products;
+      this.getAllMaxProductAvailability(this.productList);
+    });
     this.buildOrderForm();
+
   }
 
   private buildOrderForm() {
@@ -41,12 +53,27 @@ export class NewOrderComponent implements OnInit {
     console.log(this.newOrderForm);
     this.productService.checkProductAvailability(this.newOrderForm.getRawValue()).subscribe( (isAble) => {
       if (isAble) {
-        this.orderService.submitNewOrder(this.newOrderForm.getRawValue()).subscribe( (result) => {
+        this.orderService.submitNewOrder(this.newOrderForm.getRawValue()).subscribe( (result: Order) => {
         console.log(result);
-      }, error => console.error(error));
+        this.toastrService.success("Exito", "Se creó la nueva orden con el Id: " + result.id);
+        setTimeout( () => this.router.navigate(['home', 'dashboard']));
+      }, error => {
+          console.error(error);
+          this.toastrService.danger("Error", "Hubo un error al generar nueva orden");
+        });
       } else {
-        // TODO saltar error
+        this.toastrService.warning("Sin Insumos",
+          "No tiene insumos suficientes para producir la orden",
+          {duration: 3000});
       }
     });
+  }
+
+  private getAllMaxProductAvailability(productList: Product[]) {
+    this.productService.getMaxProductAvailability(productList.map(product => product.id))
+      .subscribe( result => {
+        console.log(result);
+        this.maxProdAvailability = result;
+      })
   }
 }
