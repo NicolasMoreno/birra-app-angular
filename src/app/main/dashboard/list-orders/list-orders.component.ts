@@ -293,7 +293,7 @@ export class ListOrdersComponent implements OnInit {
   }
 
   onViewAction(event: {data: {id: number}}) {
-    this.router.navigate(['home', 'orders', event.data.id]);
+    this.router.navigate(['home', 'dashboard', 'detail', event.data.id]);
   }
 
 }

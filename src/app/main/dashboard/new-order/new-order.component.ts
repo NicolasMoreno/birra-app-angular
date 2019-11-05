@@ -24,10 +24,11 @@ export class NewOrderComponent implements OnInit {
               private readonly fb: FormBuilder,
               private readonly toastrService: NbToastrService,
               private readonly router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    this.productService.getAll().subscribe( (products: Product[]) => {
+    this.productService.getAll().subscribe((products: Product[]) => {
       this.productList = products;
       this.getAllMaxProductAvailability(this.productList);
     });
@@ -51,13 +52,13 @@ export class NewOrderComponent implements OnInit {
 
   onSubmitButton() {
     console.log(this.newOrderForm);
-    this.productService.checkProductAvailability(this.newOrderForm.getRawValue()).subscribe( (isAble) => {
+    this.productService.checkProductAvailability(this.newOrderForm.getRawValue()).subscribe((isAble) => {
       if (isAble) {
-        this.orderService.submitNewOrder(this.newOrderForm.getRawValue()).subscribe( (result: Order) => {
-        console.log(result);
-        this.toastrService.success("Exito", "Se creó la nueva orden con el Id: " + result.id);
-        setTimeout( () => this.router.navigate(['home', 'dashboard']));
-      }, error => {
+        this.orderService.submitNewOrder(this.newOrderForm.getRawValue()).subscribe((result: Order) => {
+          console.log(result);
+          this.toastrService.success("Exito", "Se creó la nueva orden con el Id: " + result.id);
+          setTimeout(() => this.router.navigate(['home', 'dashboard']));
+        }, error => {
           console.error(error);
           this.toastrService.danger("Error", "Hubo un error al generar nueva orden");
         });
@@ -71,9 +72,9 @@ export class NewOrderComponent implements OnInit {
 
   private getAllMaxProductAvailability(productList: Product[]) {
     this.productService.getMaxProductAvailability(productList.map(product => product.id))
-      .subscribe( result => {
+      .subscribe(result => {
         console.log(result);
         this.maxProdAvailability = result;
-      })
+      });
   }
 }

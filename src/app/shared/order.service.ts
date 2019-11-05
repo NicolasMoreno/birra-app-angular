@@ -10,10 +10,15 @@ export class OrderService {
 
   private readonly url: string = environment.url;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAllOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(`${this.url}orders/all`);
+  }
+
+  getOrder(id: string): Observable<Order> {
+    return this.http.get<Order>(`${this.url}orders/${id}`);
   }
 
   submitNewOrder(newOrderForm: RequestOrder): Observable<Order> {

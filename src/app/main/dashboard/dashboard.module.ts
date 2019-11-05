@@ -6,7 +6,7 @@ import {
   NbButtonModule,
   NbCardModule,
   NbIconModule,
-  NbInputModule,
+  NbInputModule, NbProgressBarModule,
   NbSelectModule,
   NbToastrService
 } from "@nebular/theme";
@@ -19,6 +19,7 @@ import {ProcessRendererComponent} from "./table-render/process-renderer.componen
 import {NewOrderComponent} from "./new-order/new-order.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProductService} from "../../shared/product.service";
+import {OrderDetailComponent} from "./sub-order/order-detail.component";
 
 @NgModule({
   declarations: [DashboardComponent,
@@ -26,7 +27,8 @@ import {ProductService} from "../../shared/product.service";
     NewOrderComponent,
     StatusRendererComponent,
     DateRendererComponent,
-    ProcessRendererComponent
+    ProcessRendererComponent,
+    OrderDetailComponent
   ],
   entryComponents: [StatusRendererComponent,
     DateRendererComponent,
@@ -42,9 +44,11 @@ import {ProductService} from "../../shared/product.service";
     NbButtonModule,
     NbIconModule,
     NbSelectModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    NbProgressBarModule
   ],
   providers: [NbToastrService, OrderService, ProductService]
 })
 
-export class DashboardModule {}
+export class DashboardModule {
+}
