@@ -41,13 +41,15 @@ export class OrderDetailComponent {
 
   calculateProgressBar(): void {
     const all: number = this.order.subOrders.length;
-    const countFinished: number = this.order.subOrders.filter(s => s.state === OrderState.FINALIZADO).length;
-    if (countFinished === 0) {
-      this.orderPercentage = (countFinished / this.order.subOrders.length) * 100;
+    const countFinished: number = this.order.subOrders
+      .filter(s => +OrderState[s.state] === OrderState.FINALIZADO).length;
+    if (countFinished > 0) {
+      const arimetic: number = countFinished / all * 100;
+      this.orderPercentage = Math.trunc(arimetic) ;
     } else {
       this.orderPercentage = 1;
     }
-
+    console.log(this.orderPercentage);
   }
 
   isOrderFinished(): boolean {
@@ -56,8 +58,6 @@ export class OrderDetailComponent {
 
   isSubOrderEmit(): boolean {
     const currentSubOrder: SubOrder = this.order.subOrders.find(s => s.orderProcess === this.order.actualProcess);
-    console.log(currentSubOrder.orderProcess, currentSubOrder.state);
-    console.log(OrderState, +OrderState[currentSubOrder.state] === OrderState.EMITIDO);
     return +OrderState[currentSubOrder.state] === OrderState.EMITIDO;
   }
 
@@ -69,6 +69,7 @@ export class OrderDetailComponent {
       this.isSubOrderEmit() ? OrderState.EN_PROGRESO : OrderState.FINALIZADO))
       .subscribe(resp => {
         this.order = resp;
+        this.isEmit = this.isSubOrderEmit();
         this.calculateProgressBar();
       })
     ;
