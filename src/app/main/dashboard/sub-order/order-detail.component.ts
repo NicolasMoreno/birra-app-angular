@@ -53,7 +53,7 @@ export class OrderDetailComponent {
   }
 
   isOrderFinished(): boolean {
-    return this.order.state === OrderState.FINALIZADO;
+    return +OrderState[this.order.state] === OrderState.FINALIZADO;
   }
 
   isSubOrderEmit(): boolean {

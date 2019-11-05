@@ -8,28 +8,36 @@
       <div class="product-detail">
         <div class="form-group">
           <label for="productName" class="label" fullWidth>Nombre del Producto</label>
-          <input id="productName" type="text" nbInput  value="{{order.product.name}}" readonly fullWidth>
+          <input id="productName" type="text" nbInput value="{{order.product.name}}" readonly fullWidth>
         </div>
         <div class="form-group">
           <label for="productAmount" class="label" fullWidth>Cantidad</label>
           <input id="productAmount" type="number" nbInput readonly fullWidth value="{{order.orderAmount}}">
         </div>
       </div>
-      <h4 class="text-center">Progreso</h4>
+      <h4 class="text-center" [style.margin]="'20px 0'">Progreso</h4>
       <nb-progress-bar [value]="orderPercentage" status="primary" [displayValue]="true"></nb-progress-bar>
-      <form [formGroup]="group">
-        <div class="form-group">
-          <label for="subOrderName" class="label" fullWidth>Proceso Actual</label>
-          <input id="subOrderName" formControlName="value" type="text" nbInput value="{{order.actualProcess.toString()}}"
-                 fullWidth readonly>
-        </div>
-        <div class="form-group">
-          <label for="value" class="label" fullWidth>{{isEmit ? 'Valor Inicial' : 'Valor Final'}}</label>
-          <input id="value" formControlName="value" type="number" nbInput value="{{order.product.name}}" fullWidth>
-        </div>
-        <button type="submit" [disabled]="group.invalid" nbButton
-                status="info" (click)="submitSubOrder()">{{isEmit ? 'Empezar' : 'Finalizar'}}</button>
-      </form>
+      <ng-container *ngIf="!isOrderFinished(); then form ;else orderFinished"></ng-container>
+      <ng-template #form>
+        <form [formGroup]="group">
+          <div class="form-group">
+            <label for="subOrderName" class="label" fullWidth>Proceso Actual</label>
+            <input id="subOrderName" formControlName="value" type="text" nbInput
+                   value="{{order.actualProcess.toString()}}"
+                   fullWidth readonly>
+          </div>
+          <div class="form-group">
+            <label for="value" class="label" fullWidth>{{isEmit ? 'Valor Inicial' : 'Valor Final'}}</label>
+            <input id="value" formControlName="value" type="number" nbInput value="{{order.product.name}}" fullWidth>
+          </div>
+          <button type="submit" [disabled]="group.invalid" nbButton
+                  status="info" (click)="submitSubOrder()">{{isEmit ? 'Empezar' : 'Finalizar'}}</button>
+        </form>
+      </ng-template>
+      <ng-template #orderFinished>
+
+        <h4 class="text-center"  [style.margin]="'40px 0'">Finalizada</h4>
+      </ng-template>
     </div>
   </nb-card-body>
 </nb-card>
