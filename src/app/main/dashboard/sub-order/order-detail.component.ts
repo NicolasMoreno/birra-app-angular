@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {OrderService} from "../../../shared/order.service";
 import {SubOrder} from "../model/sub-order";
 import {ActivatedRoute} from "@angular/router";
+import {OrderChangeModel} from "../model/order-change.model";
 
 @Component({
   selector: 'app-order-detail.component',
@@ -20,6 +21,8 @@ export class OrderDetailComponent {
   order: Order;
   orderPercentage: number = 100;
 
+  isEmit = false;
+
   constructor(private formBuilder: FormBuilder,
               private orderService: OrderService,
               private readonly activatedRoute: ActivatedRoute
@@ -30,6 +33,7 @@ export class OrderDetailComponent {
         if (o !== undefined) {
           this.order = o;
           this.calculateProgressBar();
+          this.isEmit = this.isSubOrderEmit();
         }
       });
     });
@@ -51,10 +55,22 @@ export class OrderDetailComponent {
   }
 
   isSubOrderEmit(): boolean {
-    const currentSubOrder: SubOrder = this.order.subOrders.find(s => s.process === this.order.actualProcess);
-    return currentSubOrder.state === OrderState.EMITIDO;
+    const currentSubOrder: SubOrder = this.order.subOrders.find(s => s.orderProcess === this.order.actualProcess);
+    console.log(currentSubOrder.orderProcess, currentSubOrder.state);
+    console.log(OrderState, +OrderState[currentSubOrder.state] === OrderState.EMITIDO);
+    return +OrderState[currentSubOrder.state] === OrderState.EMITIDO;
   }
 
   submitSubOrder(): void {
+    const dataForm = this.group.getRawValue();
+    this.orderService.submitOrderChange(OrderChangeModel.from(
+      this.order,
+      dataForm.value,
+      this.isSubOrderEmit() ? OrderState.EN_PROGRESO : OrderState.FINALIZADO))
+      .subscribe(resp => {
+        this.order = resp;
+        this.calculateProgressBar();
+      })
+    ;
   }
 }

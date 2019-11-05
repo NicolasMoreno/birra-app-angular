@@ -8,7 +8,7 @@ export interface SubOrder {
   author: Employee;
   state: OrderState;
   customerOrder: Order;
-  process: OrderProcess;
+  orderProcess: OrderProcess;
   startedDate: Date;
   finishedDate: Date;
 }
