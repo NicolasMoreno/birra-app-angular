@@ -7,5 +7,5 @@ export enum OrderProcess {
   FERMENTACION,
   MADURADO,
   EMBOTELLADO,
-  GASIFICADO,
+  CALIDAD,
 }

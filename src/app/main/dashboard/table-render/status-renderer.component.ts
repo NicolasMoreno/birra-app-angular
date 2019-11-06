@@ -13,7 +13,6 @@ export class StatusRendererComponent implements ViewCell, OnInit {
   @Input() rowData: any;
 
   ngOnInit(): void {
-    console.log(OrderState);
     this.renderValue = this.switchToString(this.value);
   }
 
