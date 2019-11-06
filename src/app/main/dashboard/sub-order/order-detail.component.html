@@ -20,23 +20,37 @@
       <ng-container *ngIf="!isOrderFinished(); then form ;else orderFinished"></ng-container>
       <ng-template #form>
         <form [formGroup]="group">
-          <div class="form-group">
-            <label for="subOrderName" class="label" fullWidth>Proceso Actual</label>
-            <input id="subOrderName" formControlName="value" type="text" nbInput
-                   value="{{order.actualProcess.toString()}}"
-                   fullWidth readonly>
+          <div class="row">
+            <div class="" [ngClass]="{'col-12 row': !isAdditionalData, 'col-6': isAdditionalData}">
+              <div class="form-group" [ngClass]="{'col-12': isAdditionalData, 'col-6': !isAdditionalData}">
+                <label for="subOrderName" class="label" fullWidth>Proceso Actual</label>
+                <input id="subOrderName"  type="text" nbInput
+                       value="{{order.actualProcess.toString()}}"
+                       fullWidth readonly>
+              </div>
+              <div class="form-group" [ngClass]="{'col-12': isAdditionalData, 'col-6': !isAdditionalData}">
+                <label for="value" class="label" fullWidth>{{isEmittedState ? 'Valor Inicial' : 'Valor Final'}}</label>
+                <input id="value" formControlName="value" type="number" nbInput
+                       fullWidth>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="isAdditionalData">
+              <div class="form-group">
+                <label for="additionalValue" class="label"
+                       fullWidth>Valor Adicional</label>
+                <input id="additionalValue" formControlName="additionalData" type="number" nbInput
+                       fullWidth>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="value" class="label" fullWidth>{{isEmit ? 'Valor Inicial' : 'Valor Final'}}</label>
-            <input id="value" formControlName="value" type="number" nbInput value="{{order.product.name}}" fullWidth>
+          <div fullWidth class="text-center">
+            <button type="submit" [disabled]="group.invalid" nbButton
+                    status="info" (click)="submitSubOrder()">{{isEmittedState ? 'Empezar' : 'Finalizar'}}</button>
           </div>
-          <button type="submit" [disabled]="group.invalid" nbButton
-                  status="info" (click)="submitSubOrder()">{{isEmit ? 'Empezar' : 'Finalizar'}}</button>
         </form>
       </ng-template>
       <ng-template #orderFinished>
-
-        <h4 class="text-center"  [style.margin]="'40px 0'">Finalizada</h4>
+        <h4 class="text-center" [style.margin]="'40px 0'">Finalizada</h4>
       </ng-template>
     </div>
   </nb-card-body>
