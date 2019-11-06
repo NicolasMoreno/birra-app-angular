@@ -13,17 +13,21 @@ import {OrderChangeModel} from "../model/order-change.model";
 })
 export class OrderDetailComponent {
   group: FormGroup = this.formBuilder.group({
-    value: new FormControl('',
-      [Validators.required,
-        Validators.min(1)]),
+    value: new FormControl(''),
     additionalData: new FormControl(null)
   });
 
   order: Order;
+  currentSuborder: SubOrder;
   orderPercentage: number = 100;
 
   isEmittedState: boolean = false;
   isAdditionalData: boolean = false;
+  isTemperatureData: boolean = false;
+  isWeightData: boolean = false;
+  isQuantityData: boolean = false;
+
+  private readonly validatorsList = [Validators.required, Validators.min(1)];
 
   constructor(private formBuilder: FormBuilder,
               private orderService: OrderService,
@@ -34,10 +38,14 @@ export class OrderDetailComponent {
       this.orderService.getOrder(orderID).subscribe(o => {
         if (o !== undefined) {
           this.order = o;
+          this.currentSuborder = this.getCurrentSubOrder();
           this.calculateProgressBar();
           this.isEmittedState = this.isSubOrderEmit();
           this.isAdditionalData = this.isAdditionalDataRequired();
-          this.modifyValidators(this.isAdditionalData);
+          this.isTemperatureData = this.isTemperatureDataRequired();
+          this.isWeightData = this.isWeightDataRequired();
+          this.isQuantityData = this.isQuantityDataRequired();
+          this.modifyValidators();
         }
       });
     });
@@ -60,41 +68,81 @@ export class OrderDetailComponent {
   }
 
   isSubOrderEmit(): boolean {
-    const currentSubOrder: SubOrder = this.order.subOrders.find(s => s.orderProcess === this.order.actualProcess);
-    return +OrderState[currentSubOrder.state] === OrderState.EMITIDO;
+    return +OrderState[this.currentSuborder.state] === OrderState.EMITIDO;
   }
 
   isAdditionalDataRequired(): boolean {
-    const currentSubOrder: SubOrder = this.order.subOrders.find(s => s.orderProcess === this.order.actualProcess);
-    return !this.isEmittedState &&
-      currentSubOrder.unit !== null;
+    return (!this.isEmittedState &&
+      this.currentSuborder.unit !== null);
+  }
+
+  getCurrentSubOrder(): SubOrder {
+    return this.order.subOrders.find(s => s.orderProcess === this.order.actualProcess);
   }
 
   submitSubOrder(): void {
     const dataForm = this.group.getRawValue();
     this.orderService.submitOrderChange(OrderChangeModel.from(
       this.order,
+      this.isSubOrderEmit() ? OrderState.EN_PROGRESO : OrderState.FINALIZADO,
       dataForm.value,
-      this.isSubOrderEmit() ? OrderState.EN_PROGRESO : OrderState.FINALIZADO))
+      dataForm.additionalData))
       .subscribe(resp => {
         this.order = resp;
+        this.currentSuborder = this.getCurrentSubOrder();
         this.isEmittedState = this.isSubOrderEmit();
         this.calculateProgressBar();
         this.isAdditionalData = this.isAdditionalDataRequired();
-        this.modifyValidators(this.isAdditionalData);
+        this.isTemperatureData = this.isTemperatureDataRequired();
+        this.isWeightData = this.isWeightDataRequired();
+        this.isQuantityData = this.isQuantityDataRequired();
+        this.modifyValidators();
         this.group.get('value').setValue(undefined);
         this.group.get('additionalData').setValue(undefined);
       })
     ;
   }
 
-  private modifyValidators(isAdditionalData: boolean) {
+  private modifyValidators() {
     const additionalDataFormControl: AbstractControl = this.group.get('additionalData');
-    if (isAdditionalData) {
-      additionalDataFormControl.setValidators([Validators.required, Validators.min(1)]);
+    const dataFormControl: AbstractControl = this.group.get('value');
+    if (this.isAdditionalData) {
+      additionalDataFormControl.setValidators(this.validatorsList);
+      if (this.isWeightData) {
+        const validators = [Validators.required, Validators.min(0), Validators.max(100)];
+        additionalDataFormControl.setValidators(validators);
+      } else if (this.isQuantityData) {
+        const validators = [Validators.required, Validators.min(0), Validators.max(this.order.orderAmount)];
+        additionalDataFormControl.setValidators(validators);
+      }
     } else {
       additionalDataFormControl.clearValidators();
     }
+
+    if (this.isTemperatureData) {
+      if (!this.isEmittedState) {
+        dataFormControl
+          .setValidators([...this.validatorsList, Validators.max(this.currentSuborder.initialData)]);
+      } else {
+        dataFormControl.setValidators(this.validatorsList);
+      }
+    } else {
+      dataFormControl.clearValidators();
+    }
+
     additionalDataFormControl.updateValueAndValidity();
+    dataFormControl.updateValueAndValidity();
+  }
+
+  private isTemperatureDataRequired() {
+    return this.currentSuborder.unit != null && this.currentSuborder.unit.unitName === "Celcius";
+  }
+
+  private isWeightDataRequired() {
+    return this.currentSuborder.unit != null && this.currentSuborder.unit.unitName === "Kilo";
+  }
+
+  private isQuantityDataRequired() {
+    return this.currentSuborder.unit != null && this.currentSuborder.unit.unitName === "Unidad";
   }
 }

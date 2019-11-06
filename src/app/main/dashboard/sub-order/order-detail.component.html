@@ -11,7 +11,7 @@
           <input id="productName" type="text" nbInput value="{{order.product.name}}" readonly fullWidth>
         </div>
         <div class="form-group">
-          <label for="productAmount" class="label" fullWidth>Cantidad</label>
+          <label for="productAmount" class="label" fullWidth>Cantidad de la orden</label>
           <input id="productAmount" type="number" nbInput readonly fullWidth value="{{order.orderAmount}}">
         </div>
       </div>
@@ -28,8 +28,8 @@
                        value="{{order.actualProcess.toString()}}"
                        fullWidth readonly>
               </div>
-              <div class="form-group" [ngClass]="{'col-12': isAdditionalData, 'col-6': !isAdditionalData}">
-                <label for="value" class="label" fullWidth>{{isEmittedState ? 'Valor Inicial' : 'Valor Final'}}</label>
+              <div class="form-group" *ngIf="isTemperatureData" [ngClass]="{'col-12': isAdditionalData, 'col-6': !isAdditionalData}">
+                <label for="value" class="label" fullWidth>{{isEmittedState ? 'Masa Inicial (Kg)' : 'Masa Final (Kg)'}}</label>
                 <input id="value" formControlName="value" type="number" nbInput
                        fullWidth>
               </div>
@@ -37,7 +37,9 @@
             <div class="col-md-6" *ngIf="isAdditionalData">
               <div class="form-group">
                 <label for="additionalValue" class="label"
-                       fullWidth>Valor Adicional</label>
+                       fullWidth>
+                  {{isTemperatureData? 'Temperatura Final': isWeightData ? 'Scrap (Porcentaje)' : isQuantityData ? 'Botellas Terminadas' : 'Valor adicional'}}
+                </label>
                 <input id="additionalValue" formControlName="additionalData" type="number" nbInput
                        fullWidth>
               </div>

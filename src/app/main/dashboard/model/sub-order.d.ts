@@ -12,6 +12,8 @@ export interface SubOrder {
   orderProcess: OrderProcess;
   startedDate: Date;
   finishedDate: Date;
+  initialData: number;
+  finishedData: number;
   additionalData: number;
   unit: Unit;
 }
