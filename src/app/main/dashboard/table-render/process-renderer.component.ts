@@ -18,7 +18,7 @@ export class ProcessRendererComponent implements ViewCell, OnInit {
   }
 
   private switchToString(state: string): string {
-    switch (OrderState[state]) {
+    switch (OrderProcess[state]) {
       case OrderProcess.MOLIENDA: return 'Molienda';
       case OrderProcess.MACERADO: return 'Macerado';
       case OrderProcess.RECIRCULADO_LAVADO: return 'Recirculado y Lavado';
