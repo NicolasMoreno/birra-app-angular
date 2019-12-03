@@ -1,13 +1,5 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-} from '@nebular/auth';
 
 const routes: Routes = [
   {
@@ -15,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('app/main/main.module')
       .then(module => module.MainModule),
   },
-  {
+  /*{
     // template routing
     path: 'template',
     children: [
@@ -55,7 +47,7 @@ const routes: Routes = [
         ],
       },
     ],
-  },
+  },*/
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
