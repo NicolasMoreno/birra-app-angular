@@ -38,7 +38,7 @@ export class SupplyComponent implements OnInit {
       supplyType: this.fb.control({value: this.stock.material.name, disabled: true}),
       actualAmount: this.fb.control({value: this.stock.storedQuantity, disabled: true}),
       unit: this.fb.control({value: this.stock.material.unit.unitName, disabled: true}),
-      raiseAmount: this.fb.control(0, [Validators.required, Validators.min(0)])
+      raiseAmount: this.fb.control(0, [Validators.required, Validators.min(0.01)])
     });
   }
 

@@ -6,6 +6,7 @@ import {OrderService} from "../../../shared/order.service";
 import {SubOrder} from "../model/sub-order";
 import {ActivatedRoute} from "@angular/router";
 import {OrderChangeModel} from "../model/order-change.model";
+import {OrderProcess} from "../model/order-process.enum";
 
 @Component({
   selector: 'app-order-detail.component',
@@ -96,6 +97,7 @@ export class OrderDetailComponent {
         this.isTemperatureData = this.isTemperatureDataRequired();
         this.isWeightData = this.isWeightDataRequired();
         this.isQuantityData = this.isQuantityDataRequired();
+        // Mandamos undefined porque no es necesario ningún valor para validar
         this.modifyValidators();
         this.group.get('value').setValue(undefined);
         this.group.get('additionalData').setValue(undefined);
@@ -112,7 +114,14 @@ export class OrderDetailComponent {
         const validators = [Validators.required, Validators.min(0), Validators.max(100)];
         additionalDataFormControl.setValidators(validators);
       } else if (this.isQuantityData) {
-        const validators = [Validators.required, Validators.min(0), Validators.max(this.order.orderAmount)];
+        const maduradoProcessValue: number = this.order.subOrders
+          .find(subOrder => +OrderProcess[subOrder.orderProcess] === OrderProcess.MADURADO).finishData;
+        const validators = [
+          Validators.required, Validators.min(0),
+          Validators.max(this.order.orderAmount > maduradoProcessValue ?
+            maduradoProcessValue :
+            this.order.orderAmount)
+        ];
         additionalDataFormControl.setValidators(validators);
       }
     } else {

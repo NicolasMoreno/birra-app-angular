@@ -13,7 +13,7 @@ export interface SubOrder {
   startedDate: Date;
   finishedDate: Date;
   initialData: number;
-  finishedData: number;
+  finishData: number;
   additionalData: number;
   unit: Unit;
 }
